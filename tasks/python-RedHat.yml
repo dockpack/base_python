@@ -2,6 +2,7 @@
 
 - name: install epel repository
   become: yes
+  when: ansible_os_family == 'RedHat'
   yum:
     name: epel-release
     state: present
@@ -12,6 +13,7 @@
 
 - name: 'install python_rpms from rhel repositories'
   become: yes
+  when: ansible_os_family == 'RedHat'
   yum:
     name: "{{ item }}"
     state: present
@@ -22,6 +24,7 @@
 
 - name: 'install python_rpms from epel repositories'
   become: yes
+  when: ansible_os_family == 'RedHat'
   yum:
     name: "{{ item }}"
     state: present
