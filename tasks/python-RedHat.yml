@@ -1,16 +1,5 @@
 ---
 
-- name: install epel repository
-  become: yes
-  when: ansible_os_family == 'RedHat'
-  yum:
-    name: epel-release
-    state: present
-    update_cache: yes
-  tags:
-    - python
-    - pip
-
 - name: 'install python_rpms from rhel repositories'
   become: yes
   when: ansible_os_family == 'RedHat'
