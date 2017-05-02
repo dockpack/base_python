@@ -23,4 +23,5 @@ galaxy_info:
     - system
     - development
 
-dependencies: []
+dependencies:
+  - { role: bbaassssiiee.base_epel }
