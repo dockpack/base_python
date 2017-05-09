@@ -3,21 +3,17 @@
 python_rhel:
   - python
   - python-crypto
-  - python-netaddr
-  - python-nose
-  - python-setuptools
   - pyOpenSSL
+  - python-setuptools
+  - python-pip
 
 python_epel:
   - python-devel
+  - python-virtualenv
   - python-cryptography
-  - python-pip
   - python-pyasn1
   - libffi-devel
   - openssl-devel
-  - python-httplib2
-  - python-testtools
-  - python-virtualenv
 
 python_apts:
     - python
