@@ -1,5 +1,13 @@
 ---
 
+- name: 'prepare to get latest setuptools and pip'
+  get_url:
+    url: https://bootstrap.pypa.io/get-pip.py
+    dest: /usr/local/bin
+    owner: root
+    group: root
+    mode: 0700
+
 - include: python-RedHat.yml
   when: ansible_os_family == 'RedHat'
   tags:
@@ -18,14 +26,11 @@
     - python
     - ubuntu
 
-- name: 'update python setuptools'
-  pip:
-    name: setuptools
-    state: latest
-  tags:
-    - skip_ansible_lint
-    - python
-    - setuptools
+
+- name: 'install latest setuptools and pip'
+  become: yes
+  command: "{{ base_python_version }} /usr/local/bin/get-pip.py"
+
 
 - name: 'make sure directory exists'
   become: yes
@@ -46,16 +51,6 @@
   tags:
     - python
     - pip
-
-- name: 'upgrade pip from the pypi mirror'
-  become: yes
-  command: pip install pip --upgrade
-  changed_when: no
-  tags:
-    - python
-    - pip
-    - test
-
 
 - name: 'copy requirements.txt'
   copy:

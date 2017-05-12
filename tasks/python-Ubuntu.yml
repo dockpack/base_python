@@ -1,5 +1,27 @@
 ---
 
+- name: 'set base_python_version: python3'
+  when: ansible_distribution_release in [ 'wheezy', 'xenial', 'jessie', 'sid']
+  set_fact:
+    base_python_version: 'python3'
+    base_python_package: 'python3.4'
+  tags:
+    - python
+    - pip
+
+- name: install required packages
+  become: yes
+  apt:
+    name: "{{ base_python_package }}"
+    state: present
+  tags:
+    - python
+    - pip
+
+- name: ensure apt cache is updated
+  apt:
+    update_cache: yes
+
 - name: install ubuntu python packages
   become: yes
   apt: name={{ item }} state=present

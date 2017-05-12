@@ -1,9 +1,36 @@
 ---
 
-- name: install required packages
+- name: 'set base_python_version: python2'
+  when: ansible_distribution_release in ['stretch', 'sid']
+  set_fact:
+    base_python_version: 'python2'
+    base_python_package: 'python2.7'
+  tags:
+    - python
+    - pip
+
+- name: 'set base_python_version: python3'
+  when: ansible_distribution_release in ['wheezy']
+  set_fact:
+    base_python_version: 'python3'
+    base_python_package: 'python3.2'
+  tags:
+    - python
+    - pip
+
+- name: 'set base_python_version: python3'
+  when: ansible_distribution_release in [ 'jessie', 'sid']
+  set_fact:
+    base_python_version: 'python3'
+    base_python_package: 'python3.4'
+  tags:
+    - python
+    - pip
+
+- name: install python3 if available
   become: yes
   apt:
-    name: python
+    name: "{{ base_python_package }}"
     state: present
   tags:
     - python

@@ -1,5 +1,13 @@
 ---
 
+- name: 'set base_python_version: python2'
+  set_fact:
+    base_python_version: 'python2'
+    base_python_package: 'python'
+  tags:
+    - python
+    - pip
+
 - name: 'install python_rpms from rhel repositories'
   become: yes
   when: ansible_os_family == 'RedHat'
@@ -23,18 +31,6 @@
     - python
     - pip
 
-- name: ugrade pip
-  pip:
-    name: pip
-    state: latest
-  tags:
-    - pip
-    - skip_ansible_lint
-
-- name: ugrade setuptools
-  pip:
-    name: setuptools
-    state: latest
-  tags:
-    - pip
-    - skip_ansible_lint
+#pip install setuptools --upgrade
+#pip install pip --upgrade
+#pip install -v ansible-container==0.3.0
