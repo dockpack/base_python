@@ -46,7 +46,7 @@
 - name: 'deploy our own pip.conf config file'
   become: yes
   template:
-    src: pip.j2
+    src: pip
     dest: '/etc/pip.conf'
   tags:
     - python

@@ -1,4 +1,6 @@
 virtualenv
+pep8
+flake8
 PyYAML==3.11
 requests==2.7.0
 Jinja2==2.8
