@@ -16,8 +16,8 @@ python_epel:
   - openssl-devel
 
 python_apts:
-    - python
-    - python-pip
-    - libffi-dev
-    - libssl-dev
-    - python-dev
+  - python
+  - python-pip
+  - libffi-dev
+  - libssl-dev
+  - python-dev
