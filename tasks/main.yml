@@ -7,6 +7,8 @@
     owner: root
     group: root
     mode: 0700
+  tags:
+    - python
 
 - include: python-RedHat.yml
   when: ansible_os_family == 'RedHat'
@@ -26,11 +28,13 @@
     - python
     - ubuntu
 
-
 - name: 'install latest setuptools and pip'
   become: yes
   command: "{{ base_python_version }} /usr/local/bin/get-pip.py"
-
+  tags:
+    - python
+    - ubuntu
+    - skip_ansible_lint  # lint runs before bootstrap
 
 - name: 'make sure directory exists'
   become: yes
