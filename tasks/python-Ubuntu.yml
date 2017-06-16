@@ -4,7 +4,7 @@
   when: ansible_distribution_release in [ 'wheezy', 'xenial', 'jessie', 'sid']
   set_fact:
     base_python_version: 'python3'
-    base_python_package: 'python3.4'
+    base_python_package: 'python3.5'
   tags:
     - python
     - pip
@@ -24,7 +24,9 @@
 
 - name: install ubuntu python packages
   become: yes
-  apt: name={{ item }} state=present
+  apt:
+    name: "{{ item }}"
+    state: present
   with_items: "{{ python_apts }}"
   tags:
     - python
