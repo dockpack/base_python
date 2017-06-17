@@ -22,7 +22,6 @@ galaxy_info:
     - development
     - buildserver
     - python
-    - centos
     - ubuntu
 
 dependencies:
