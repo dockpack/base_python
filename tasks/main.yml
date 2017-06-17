@@ -32,6 +32,7 @@
 - name: 'install latest setuptools and pip'
   become: yes
   command: "{{ base_python_version }} /usr/local/bin/get-pip.py"
+  changed_when: no
   tags:
     - python
     - ubuntu
