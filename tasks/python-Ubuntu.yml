@@ -18,10 +18,6 @@
     - python
     - pip
 
-- name: ensure apt cache is updated
-  apt:
-    update_cache: yes
-
 - name: install ubuntu python packages
   become: yes
   apt:
