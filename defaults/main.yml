@@ -6,6 +6,7 @@ python_rhel:
   - pyOpenSSL
   - python-setuptools
   - python-pip
+  - python-wheel
 
 python_epel:
   - python-devel
@@ -17,6 +18,8 @@ python_epel:
 
 python_apts:
   - python
+  - python-dev
+  - python-virtualenv
   - python-pip
   - libffi-dev
   - libssl-dev
