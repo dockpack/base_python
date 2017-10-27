@@ -24,4 +24,5 @@ galaxy_info:
     - python
     - ubuntu
 
-dependencies: []
+dependencies:
+  - dockpack.cplusplus
