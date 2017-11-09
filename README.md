@@ -18,7 +18,7 @@ Role Variables
 Dependencies
 ------------
 
-bbaassssiiee.base_epel is a role that this role depends on, see above.
+dockpack.base_epel is a role that this role depends on, see above.
 
 Example Usage
 ----------------
