@@ -25,4 +25,4 @@ galaxy_info:
     - ubuntu
 
 dependencies:
-    - dockpack.base_epel
+  - dockpack.base_epel
