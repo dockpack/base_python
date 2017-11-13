@@ -5,7 +5,8 @@ base_python is a role to install python in the context of Ansible. It includes c
 Requirements
 ------------
 
-RHEL-like, or Debian/Ubuntu system
+For testing you need Docker.
+for running you need RHEL-like, or Debian/Ubuntu system
 
 
 Role Variables

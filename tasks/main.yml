@@ -11,19 +11,22 @@
   tags:
     - python
 
-- include: python-RedHat.yml
+- name: 'load EL specific actions'
+  include_tasks: python-RedHat.yml
   when: ansible_os_family == 'RedHat'
   tags:
     - python
     - redhat
 
-- include: python-Debian.yml
+- name: 'load Debian specific actions'
+  include_tasks: python-Debian.yml
   when: ansible_distribution == 'Debian'
   tags:
     - python
     - debian
 
-- include: python-Ubuntu.yml
+- name: 'load Ubuntu specific actions'
+  include_tasks: python-Ubuntu.yml
   when: ansible_distribution == 'Ubuntu'
   tags:
     - python
