@@ -12,10 +12,10 @@ docker:
       image_version: latest
       ansible_groups:
         - group1
-    - name: base-python-ubuntu
-      image: ubuntu
-      image_version: latest
-      ansible_groups:
-        - group2
+#    - name: base-python-ubuntu
+#      image: ubuntu
+#      image_version: latest
+#      ansible_groups:
+#        - group2
 verifier:
   name: goss
