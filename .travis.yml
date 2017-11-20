@@ -11,7 +11,12 @@ install:
 
 script:
   - find . -name "*.yml" | xargs yamllint
-  - molecule test
+  - molecule destroy
+  - molecule create
+  - molecule syntax
+  - molecule dependency
+  - molecule converge
+  - molecule idempotence
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
