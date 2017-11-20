@@ -39,7 +39,7 @@
   tags:
     - python
     - ubuntu
-    - skip_ansible_lint  # lint runs before bootstrap
+    - skip_ansible_lint
 
 - name: 'make sure directory exists'
   become: yes
