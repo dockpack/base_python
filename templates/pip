@@ -4,7 +4,7 @@
 ## index-url = https://user:password@proxy:8443/artifactory/pypi/pypi-virtual/simple
 {% if artifactory_hostname is defined%}
 index-url = https://{{ artifactory_hostname }}:{{ artifactory_port  }}/{{ artifactory_repo_path }}
-cert = {{ artifactory_certificate_path }}
+# cert = {{certificate_path }}
 {% endif %}
 
 [list]
