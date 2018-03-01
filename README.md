@@ -1,25 +1,32 @@
+![Build Status](https://api.travis-ci.org/dockpack/base_python.svg)
+
+base_python
 =========
 
-base_python is a role to install python in the context of Ansible. It includes crypto extensions with compiled code.
+base_python is an ansible-role to install python in the context of Ansible.
+It includes crypto extensions with compiled code.
 
 Requirements
 ------------
 
 For testing you need Docker.
-for running you need RHEL-like, or Debian/Ubuntu system
+For running you need RHEL-like, or Debian/Ubuntu system
 
 
 Role Variables
 --------------
 
+```
 'python_rhel' is a list of rpms available in your default yum repo.
 'python_epel' is a list of rpms without RedHat support
 'python_apts' is a list of packages for Debian/Ubuntu
+```
 
 Dependencies
 ------------
 
-dockpack.base_epel is a role that this role depends on, see above.
+You need access to RPMs from EPEL. This is a weak dependency.
+dockpack.base_epel is a role that you can use for this.
 
 Example Usage
 ----------------
