@@ -3,4 +3,11 @@
 - hosts: all
   roles:
     - role: dockpack.base_epel
+    - role: dockpack.base_goss
     - role: base_python
+
+  post_tasks:
+    - name: validate pip proxy
+      pip:
+        name: nose2
+        state: present

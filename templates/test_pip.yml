@@ -1,0 +1,8 @@
+file:
+  /etc/pip.conf:
+    exists: true
+    mode: "0644"
+    owner: root
+    group: root
+    filetype: file
+    contains: "format=legacy"

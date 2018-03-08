@@ -1,5 +1,4 @@
 ---
-pypi_proxy_port: 443
 
 python_rhel:
   - python

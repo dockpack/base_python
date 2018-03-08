@@ -3,7 +3,7 @@ virtualenv
 pylint
 flake8
 pytest
-nose2
+# nose2
 ansible==2.3.0
 yamllint==1.8.1
 ansible-lint==3.4.5
