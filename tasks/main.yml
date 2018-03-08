@@ -1,16 +1,5 @@
 ---
 
-- name: 'prepare to get latest setuptools and pip'
-  get_url:
-    url: https://bootstrap.pypa.io/get-pip.py
-    dest: /usr/local/bin
-    owner: root
-    group: root
-    mode: 0700
-    validate_certs: no
-  tags:
-    - python
-
 - name: 'load EL specific actions'
   include: python-RedHat.yml
   when: ansible_os_family == 'RedHat'
@@ -33,13 +22,14 @@
     - ubuntu
 
 - name: 'install latest setuptools and pip'
-  become: yes
-  command: "{{ base_python_version }} /usr/local/bin/get-pip.py"
-  changed_when: no
+  script: get-pip.py
+  args:
+    creates: /usr/lib/python2.7/site-packages/pip-9.0.1.dist-info
   tags:
     - python
     - ubuntu
     - skip_ansible_lint
+
 
 - name: 'make sure directory exists'
   become: yes
