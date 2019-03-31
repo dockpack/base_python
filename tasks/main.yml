@@ -4,32 +4,33 @@
   include: python-RedHat.yml
   when: ansible_os_family == 'RedHat'
   tags:
-    - python
+    - base_python
     - redhat
 
 - name: 'load Debian specific actions'
   include: python-Debian.yml
   when: ansible_distribution == 'Debian'
   tags:
-    - python
+    - base_python
     - debian
 
 - name: 'load Ubuntu specific actions'
   include: python-Ubuntu.yml
   when: ansible_distribution == 'Ubuntu'
   tags:
-    - python
+    - base_python
     - ubuntu
 
 - name: 'install latest setuptools and pip'
   script: get-pip.py
   args:
-    creates: /usr/lib/python2.7/site-packages/pip-9.0.1.dist-info
+    creates: "/usr/lib/python2.7/site-packages/pip-{{ python_pip_latest }}.dist-info"
+  when: ansible_os_family == 'RedHat'
+  changed_when: false  # hack idempotence
   tags:
-    - python
-    - ubuntu
+    - base_python
+    - redhat
     - skip_ansible_lint
-
 
 - name: 'make sure directory exists'
   become: yes
@@ -39,16 +40,16 @@
     owner: root
     group: root
   tags:
-    - python
+    - base_python
     - pip
 
 - name: 'deploy our own pip.conf config file'
   become: yes
   template:
-    src: pip
+    src: pip.conf.j2
     dest: '/etc/pip.conf'
   tags:
-    - python
+    - base_python
     - pip
 
 - name: 'copy requirements.txt'
@@ -56,7 +57,7 @@
     src: requirements.txt
     dest: '/tmp/python_requirements.txt'
   tags:
-    - python
+    - base_python
     - pip
 
 - name: 'pip install dependencies'
@@ -64,5 +65,5 @@
     requirements: '/tmp/python_requirements.txt'
     state: present
   tags:
-    - python
+    - base_python
     - pip

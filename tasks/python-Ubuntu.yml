@@ -9,21 +9,11 @@
     - python
     - pip
 
-- name: install required packages
-  become: yes
-  apt:
-    name: "{{ base_python_package }}"
-    state: present
-  tags:
-    - python
-    - pip
-
 - name: install ubuntu python packages
   become: yes
   apt:
-    name: "{{ item }}"
+    name: "{{ python_apts }}"
     state: present
-  with_items: "{{ python_apts }}"
   tags:
     - python
     - pip

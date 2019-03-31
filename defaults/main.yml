@@ -1,5 +1,14 @@
 ---
 
+# Software collections offer latest versions of programming languages
+collections_enabled: false
+
+# major release of software collections' devtoolset
+base_python_version: 2
+python_collection: rh-python36
+
+python_pip_latest: 10.0.0
+
 python_rhel:
   - python
   - python-crypto

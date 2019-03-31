@@ -1,4 +1,8 @@
-virtualenv
 pep8
 flake8
-six
+nose
+pyflakes
+pytest
+pylint
+testinfra
+yamllint==1.8.1

@@ -43,9 +43,8 @@
 - name: install required packages
   become: yes
   apt:
-    name: "{{ item }}"
+    name: "{{ python_apts }}"
     state: present
-  with_items: "{{ python_apts }}"
   tags:
     - python
     - pip

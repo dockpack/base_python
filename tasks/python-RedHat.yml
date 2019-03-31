@@ -1,34 +1,71 @@
 ---
 
-- name: 'set base_python_version: python2'
+- name: set base_python_version to python2
   set_fact:
     base_python_version: 'python2'
     base_python_package: 'python'
   tags:
-    - python
+    - base_python
     - pip
+
+- name: install centos software collections
+  package:
+    name: centos-release-scl-rh
+    state: present
+  when: collections_enabled and ansible_distribution == 'CentOS'
+  tags:
+    - base_python
+
+- name: enable rhel software collections
+  command: "yum-config-manager --enable rhel-server-rhscl-{{ ansible_distribution_major_version }}-rpms"
+  when: collections_enabled and  ansible_distribution == 'Red Hat Enterprise Linux'
+  tags:
+    - base_python
+
+- name: yum install python from software collections
+  yum:
+    name: "{{ python_collection }}"
+    state: present
+  when: collections_enabled and ansible_os_family == 'RedHat'
+  tags:
+    - base_python
 
 - name: 'install python_rpms from rhel repositories'
   become: yes
   when: ansible_os_family == 'RedHat'
   yum:
-    name: "{{ item }}"
+    name: "{{ python_rhel }}"
     state: present
     update_cache: yes
-  with_items: "{{ python_rhel }}"
   tags:
-    - python
+    - base_python
 
-- name: 'install python_rpms from epel repositories'
+- name: enable python from software collections
+  file:
+    src: "/opt/rh/{{ python_collection }}/enable"
+    path: /etc/profile.d/devtoolset.sh
+    state: link
+  when: collections_enabled and ansible_os_family == 'RedHat'
+  tags:
+    - base_python
+
+- name: disable python from software collections
+  file:
+    path: /etc/profile.d/devtoolset.sh
+    state: absent
+  when: not collections_enabled and ansible_os_family == 'RedHat'
+  tags:
+    - base_python
+
+- name: install python_rpms from epel repositories
   become: yes
   when: ansible_os_family == 'RedHat'
   yum:
-    name: "{{ item }}"
+    name: "{{ python_epel }}"
     state: present
     update_cache: yes
-  with_items: "{{ python_epel }}"
   tags:
-    - python
+    - base_python
     - pip
 
 #pip install setuptools --upgrade
