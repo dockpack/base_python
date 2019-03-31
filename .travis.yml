@@ -1,3 +1,4 @@
+---
 sudo: required
 language: python
 services:
@@ -7,16 +8,11 @@ before_install:
   - sudo apt-get -qq update
 
 install:
+  - pip install tox-travis
   - pip install -r requirements.txt
 
 script:
-  - find . -name "*.yml" | xargs yamllint
-  - molecule destroy
-  - molecule create
-  - molecule syntax
-  - molecule dependency
-  - molecule converge
-  - molecule idempotence
+  - tox
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

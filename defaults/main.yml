@@ -15,7 +15,6 @@ python_rhel:
   - pyOpenSSL
   - python-setuptools
   - python-pip
-  - python-wheel
 
 python_epel:
   - python-devel

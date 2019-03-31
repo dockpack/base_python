@@ -17,6 +17,13 @@ Role Variables
 --------------
 
 ```
+- Software collections offer latest versions of programming languages
+`collections_enabled: true`
+
+- approved/test release of software collections' python
+`python_collection: rh-python36`
+
+
 'python_rhel' is a list of rpms available in your default yum repo.
 'python_epel' is a list of rpms without RedHat support
 'python_apts' is a list of packages for Debian/Ubuntu
@@ -25,8 +32,11 @@ Role Variables
 Dependencies
 ------------
 
-You need access to RPMs from EPEL. This is a weak dependency.
+You need access to EPEL for some RPMs. This is a weak dependency.
 dockpack.base_epel is a role that you can use for this.
+
+https://www.softwarecollections.org/en/docs/
+
 
 Example Usage
 ----------------
