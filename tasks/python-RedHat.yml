@@ -43,7 +43,7 @@
 - name: enable python from software collections
   file:
     src: "/opt/rh/{{ python_collection }}/enable"
-    path: /etc/profile.d/devtoolset.sh
+    path: /etc/profile.d/rh-python.sh
     state: link
   when: collections_enabled and ansible_os_family == 'RedHat'
   tags:
