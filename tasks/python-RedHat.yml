@@ -8,6 +8,27 @@
     - base_python
     - pip
 
+- name: 'install python_rpms from rhel repositories'
+  become: yes
+  when: not collections_enabled and ansible_os_family == 'RedHat'
+  yum:
+    name: "{{ python_rhel }}"
+    state: present
+    update_cache: yes
+  tags:
+    - base_python
+
+- name: install python_rpms from epel repositories
+  become: yes
+  when: not collections_enabled and ansible_os_family == 'RedHat'
+  yum:
+    name: "{{ python_epel }}"
+    state: present
+    update_cache: yes
+  tags:
+    - base_python
+    - pip
+
 - name: install centos software collections
   package:
     name: centos-release-scl-rh
@@ -29,45 +50,3 @@
   when: collections_enabled and ansible_os_family == 'RedHat'
   tags:
     - base_python
-
-- name: 'install python_rpms from rhel repositories'
-  become: yes
-  when: ansible_os_family == 'RedHat'
-  yum:
-    name: "{{ python_rhel }}"
-    state: present
-    update_cache: yes
-  tags:
-    - base_python
-
-- name: enable python from software collections
-  file:
-    src: "/opt/rh/{{ python_collection }}/enable"
-    path: /etc/profile.d/rh-python.sh
-    state: link
-  when: collections_enabled and ansible_os_family == 'RedHat'
-  tags:
-    - base_python
-
-- name: disable python from software collections
-  file:
-    path: /etc/profile.d/devtoolset.sh
-    state: absent
-  when: not collections_enabled and ansible_os_family == 'RedHat'
-  tags:
-    - base_python
-
-- name: install python_rpms from epel repositories
-  become: yes
-  when: ansible_os_family == 'RedHat'
-  yum:
-    name: "{{ python_epel }}"
-    state: present
-    update_cache: yes
-  tags:
-    - base_python
-    - pip
-
-#pip install setuptools --upgrade
-#pip install pip --upgrade
-#pip install -v ansible-container==0.3.0
