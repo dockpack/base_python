@@ -50,4 +50,3 @@
   when: collections_enabled and ansible_os_family == 'RedHat'
   tags:
     - base_python
-
