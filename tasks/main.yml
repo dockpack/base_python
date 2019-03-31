@@ -21,49 +21,11 @@
     - base_python
     - ubuntu
 
-- name: 'install latest setuptools and pip'
-  script: get-pip.py
-  args:
-    creates: "/usr/lib/python2.7/site-packages/pip-{{ python_pip_latest }}.dist-info"
-  when: ansible_os_family == 'RedHat'
-  changed_when: false  # hack idempotence
-  tags:
-    - base_python
-    - redhat
-    - skip_ansible_lint
-
-- name: 'make sure directory exists'
-  become: yes
-  file:
-    dest: '/root/.pip'
-    state: directory
-    owner: root
-    group: root
-  tags:
-    - base_python
-    - pip
-
 - name: 'deploy our own pip.conf config file'
   become: yes
   template:
     src: pip.conf.j2
     dest: '/etc/pip.conf'
-  tags:
-    - base_python
-    - pip
-
-- name: 'copy requirements.txt'
-  copy:
-    src: requirements.txt
-    dest: '/tmp/python_requirements.txt'
-  tags:
-    - base_python
-    - pip
-
-- name: 'pip install dependencies'
-  pip:
-    requirements: '/tmp/python_requirements.txt'
-    state: present
   tags:
     - base_python
     - pip

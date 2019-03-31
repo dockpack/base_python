@@ -19,7 +19,6 @@ python_rhel:
 python_epel:
   - python-devel
   - python-virtualenv
-  - python-cryptography
   - python-pyasn1
   - libffi-devel
   - openssl-devel
