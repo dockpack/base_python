@@ -1,11 +1,11 @@
 ---
 
-- name: 'load EL specific actions'
-  include: python-RedHat.yml
-  when: ansible_os_family == 'RedHat'
+- name: 'load Ubuntu specific actions'
+  include: python-Ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
   tags:
     - base_python
-    - redhat
+    - ubuntu
 
 - name: 'load Debian specific actions'
   include: python-Debian.yml
@@ -14,12 +14,16 @@
     - base_python
     - debian
 
-- name: 'load Ubuntu specific actions'
-  include: python-Ubuntu.yml
-  when: ansible_distribution == 'Ubuntu'
+- name: 'which pip'
+  set_fact:
+    pip_executable: "/usr/bin/pip{{ base_python_version }}"
+
+- name: 'load EL specific actions'
+  include: python-RedHat.yml
+  when: ansible_os_family == 'RedHat'
   tags:
     - base_python
-    - ubuntu
+    - redhat
 
 - name: 'deploy our own pip.conf config file'
   become: yes
@@ -29,3 +33,7 @@
   tags:
     - base_python
     - pip
+
+- name: 'install pypi packages'
+  command: "{{ pip_executable }} install {{ item }}"
+  with_items: "{{ pypi_modules }}"

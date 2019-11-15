@@ -9,17 +9,24 @@ verifier:
   lint:
     name: yamllint
 platforms:
-  - name: base-python-centos
-    image: milcom/centos7-systemd
+  - name: base-python-centos7
+    image: centos:7
+    privileged: true
+  - name: base-python-centos6
+    image: centos:6
     privileged: true
   - name: base-python-ubuntu
     image: ubuntu
+    privileged: true
+  - name: base-python-debian
+    image: debian
     privileged: true
 provisioner:
   name: ansible
   config_options:
     defaults:
       remote_tmp: /tmp
+      stdout_callback: yaml
   playbooks:
     converge: playbook.yml
   lint:

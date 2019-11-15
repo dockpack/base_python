@@ -1,8 +1,8 @@
 # /etc/pip.conf
 [global]
 ## Proxy config for Python libraries. Example:
-## index-url = https://user:password@proxy:8443/artifactory/pypi/pypi-virtual/simple
-{% if artifactory_hostname is defined%}
-index-url = https://{{ artifactory_hostname }}:{{ artifactory_port  }}/{{ artifactory_repo_path }}
+## index-url = https://user:password@pypi_proxy:8443/pypi/pypi-virtual/simple
+{% if pypi_proxy is defined%}
+index-url = https://{{ pypi_proxy }}:{{ pypi_proxy_port  }}/{{ pypi_proxy_path }}
 # cert = {{certificate_path }}
 {% endif %}
