@@ -1,14 +1,12 @@
 ---
 
 # Software collections offer latest versions of programming languages
-collections_enabled: false
+collections_enabled: true
 
-# major release of software collections' devtoolset
-base_python_version: 2
-python_collection: rh-python36
+# python2 is deprecated.
+base_python_version: 3
 
-python_pip_latest: 10.0.0
-
+# python2 is deprecated.
 python_rhel:
   - python
   - python-crypto
@@ -17,17 +15,18 @@ python_rhel:
   - python-pip
 
 python_epel:
-  - python-devel
-  - python-virtualenv
-  - python-pyasn1
-  - libffi-devel
-  - openssl-devel
+  - python36-pip
+  - python36-virtualenv
+
+python_collection: rh-python36
 
 python_apts:
-  - python
-  - python-dev
-  - python-virtualenv
-  - python-pip
+  - python3-pip
+  - python3-venv
   - libffi-dev
   - libssl-dev
-  - python-dev
+
+pypi_modules:
+  - flake8
+  - pylint
+  - pytest
