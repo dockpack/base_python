@@ -1,16 +1,16 @@
 ---
 
-- name: set base_python_version to python2
-  set_fact:
-    base_python_version: 'python2'
-    base_python_package: 'python'
+- name: 'update setuptools'
+  when: base_python_version == 'python2'
+  yum:
+    name: python-setuptools
+    state: latest
   tags:
-    - base_python
-    - pip
+    - skip_ansible_lint
 
 - name: 'install python_rpms from rhel repositories'
   become: yes
-  when: not collections_enabled and ansible_os_family == 'RedHat'
+  when: not collections_enabled
   yum:
     name: "{{ python_rhel }}"
     state: present
@@ -18,9 +18,9 @@
   tags:
     - base_python
 
-- name: install python_rpms from epel repositories
+- name: 'install python_rpms from epel repositories'
   become: yes
-  when: not collections_enabled and ansible_os_family == 'RedHat'
+  when: not collections_enabled
   yum:
     name: "{{ python_epel }}"
     state: present
@@ -29,7 +29,7 @@
     - base_python
     - pip
 
-- name: install centos software collections
+- name: 'install centos software collections'
   package:
     name: centos-release-scl-rh
     state: present
@@ -37,16 +37,34 @@
   tags:
     - base_python
 
-- name: enable rhel software collections
+- name: 'enable rhel software collections'
   command: "yum-config-manager --enable rhel-server-rhscl-{{ ansible_distribution_major_version }}-rpms"
   when: collections_enabled and  ansible_distribution == 'Red Hat Enterprise Linux'
   tags:
     - base_python
 
-- name: yum install python from software collections
+- name: 'yum install python from software collections'
   yum:
     name: "{{ python_collection }}"
     state: present
-  when: collections_enabled and ansible_os_family == 'RedHat'
+  when: collections_enabled
   tags:
     - base_python
+
+- name: 'link python3 from software collections'
+  file:
+    src: "/opt/rh/{{ python_collection }}/enable"
+    path: "/etc/profile.d/{{ python_collection }}.sh"
+    state: link
+  when: collections_enabled|bool
+
+- name: 'unlink python3 from software collection'
+  file:
+    path: "/etc/profile.d/{{ python_collection }}.sh"
+    state: absent
+  when: not collections_enabled|bool
+
+- name: 'which pip'
+  when: collections_enabled
+  set_fact:
+    pip_executable: "/opt/rh/{{ python_collection }}/root/usr/bin/pip3"

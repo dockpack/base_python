@@ -1,28 +1,27 @@
 ---
 
-- name: 'set base_python_version: python2'
+- name: 'set base_python_version: 3'
+  set_fact:
+    base_python_version: '3'
+    base_python_package: 'python3'
+  tags:
+    - python
+    - pip
+
+- name: 'set base_python_version: 2'
   when: ansible_distribution_release in ['stretch', 'sid']
   set_fact:
-    base_python_version: 'python2'
+    base_python_version: '2'
     base_python_package: 'python2.7'
   tags:
     - python
     - pip
 
-- name: 'set base_python_version: python3'
+- name: 'set base_python_version: 3'
   when: ansible_distribution_release in ['wheezy']
   set_fact:
-    base_python_version: 'python3'
+    base_python_version: '3'
     base_python_package: 'python3.2'
-  tags:
-    - python
-    - pip
-
-- name: 'set base_python_version: python3'
-  when: ansible_distribution_release in [ 'jessie', 'sid']
-  set_fact:
-    base_python_version: 'python3'
-    base_python_package: 'python3.4'
   tags:
     - python
     - pip
