@@ -33,7 +33,3 @@
   tags:
     - base_python
     - pip
-
-- name: 'install pypi packages'
-  command: "{{ pip_executable }} install {{ item }}"
-  with_items: "{{ pypi_modules }}"
