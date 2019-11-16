@@ -25,8 +25,3 @@ python_apts:
   - python3-venv
   - libffi-dev
   - libssl-dev
-
-pypi_modules:
-  - flake8
-  - pylint
-  - pytest
