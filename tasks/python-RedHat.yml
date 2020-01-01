@@ -51,18 +51,10 @@
   tags:
     - base_python
 
-- name: 'link python3 from software collections'
-  file:
-    src: "/opt/rh/{{ python_collection }}/enable"
-    path: "/etc/profile.d/{{ python_collection }}.sh"
-    state: link
-  when: collections_enabled|bool
-
 - name: 'unlink python3 from software collection'
   file:
     path: "/etc/profile.d/{{ python_collection }}.sh"
     state: absent
-  when: not collections_enabled|bool
 
 - name: 'which pip'
   when: collections_enabled
