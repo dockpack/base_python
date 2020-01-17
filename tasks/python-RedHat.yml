@@ -22,7 +22,7 @@
 
 - name: 'install python_rpms from epel repositories'
   become: yes
-  when: 
+  when:
     - not collections_enabled
     - ansible_distribution_major_version|int == 7
   yum:
