@@ -21,7 +21,6 @@ python_rhel:
 # These are installed on Centos 7 when collections_enabled: false
 python_epel:
   - python36-pip
-  - python36-virtualenv
 
 python_collection: rh-python36
 
