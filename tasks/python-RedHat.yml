@@ -8,18 +8,6 @@
   tags:
     - skip_ansible_lint
 
-- name: 'install python_rpms from rhel repositories'
-  become: yes
-  when:
-    - not collections_enabled
-    - ansible_distribution_major_version|int == 6
-  yum:
-    name: "{{ python_rhel }}"
-    state: present
-    update_cache: yes
-  tags:
-    - base_python
-
 - name: 'install python_rpms from epel repositories'
   become: yes
   when:
@@ -37,13 +25,25 @@
   package:
     name: centos-release-scl-rh
     state: present
-  when: collections_enabled and ansible_distribution == 'CentOS'
+  when: collections_enabled|bool and ansible_distribution == 'CentOS'
   tags:
     - base_python
 
 - name: 'enable rhel software collections'
   command: "yum-config-manager --enable rhel-server-rhscl-{{ ansible_distribution_major_version }}-rpms"
-  when: collections_enabled and  ansible_distribution == 'Red Hat Enterprise Linux'
+  when: collections_enabled|bool and  ansible_distribution == 'Red Hat Enterprise Linux'
+  tags:
+    - base_python
+
+- name: 'install python27_rpms from rhel software collections'
+  become: yes
+  when:
+    - collections_enabled|bool
+    - ansible_distribution_major_version|int == 6
+  yum:
+    name: "{{ python27_rhel }}"
+    state: present
+    update_cache: yes
   tags:
     - base_python
 
