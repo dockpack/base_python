@@ -10,7 +10,7 @@
 
 - name: 'install python_rpms from rhel repositories'
   become: yes
-  when: 
+  when:
     - not collections_enabled
     - ansible_distribution_major_version|int == 6
   yum:
@@ -22,7 +22,9 @@
 
 - name: 'install python_rpms from epel repositories'
   become: yes
-  when: not collections_enabled
+  when: 
+    - not collections_enabled
+    - ansible_distribution_major_version|int == 7
   yum:
     name: "{{ python_epel }}"
     state: present

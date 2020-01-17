@@ -6,7 +6,8 @@ collections_enabled: true
 # python2 is deprecated.
 base_python_version: 3
 
-# python2 is deprecated.
+# python2 is deprecated, python27 allowed on Centos 6
+# These are installed on Centos 6 when collections_enabled: false
 python_rhel:
   - python27
   - python27-python-devel
@@ -17,6 +18,7 @@ python_rhel:
   - python27-python-virtualenv
   - python27-python-wheel
 
+# These are installed on Centos 7 when collections_enabled: false
 python_epel:
   - python36-pip
   - python36-virtualenv
