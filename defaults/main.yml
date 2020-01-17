@@ -8,11 +8,14 @@ base_python_version: 3
 
 # python2 is deprecated.
 python_rhel:
-  - python
-  - python-crypto
-  - pyOpenSSL
-  - python-setuptools
-  - python-pip
+  - python27
+  - python27-python-devel
+  - python27-python-pip
+  - python27-PyYAML
+  - python27-python-jinja2
+  - python27-python-pygments
+  - python27-python-virtualenv
+  - python27-python-wheel
 
 python_epel:
   - python36-pip
