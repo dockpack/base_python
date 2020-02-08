@@ -1,3 +1,4 @@
+[![Galaxy](https://img.shields.io/badge/galaxy-dockpack.base__python-blue.svg?style=flat)](https://galaxy.ansible.com/dockpack/base_python)
 ![Build Status](https://api.travis-ci.org/dockpack/base_python.svg)
 
 base_python
