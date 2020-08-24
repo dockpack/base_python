@@ -38,6 +38,8 @@
 - name: ensure apt cache is updated
   apt:
     update_cache: yes
+  tags:
+    - notest
 
 - name: install required packages
   become: yes
