@@ -14,6 +14,10 @@
   apt:
     name: "{{ python_apts }}"
     state: present
+  register: python_apt_install
+  until: python_apt_install is success
+  retries: 3
+  delay: 2
   tags:
     - python
     - pip

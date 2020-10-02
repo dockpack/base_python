@@ -17,6 +17,10 @@
     name: "{{ python_epel }}"
     state: present
     update_cache: yes
+  register: python_install
+  until: python_install is success
+  retries: 3
+  delay: 2
   tags:
     - base_python
     - pip
@@ -25,6 +29,10 @@
   package:
     name: centos-release-scl-rh
     state: present
+  register: scl_install
+  until: scl_install is success
+  retries: 3
+  delay: 2
   when: collections_enabled|bool and ansible_distribution == 'CentOS'
   tags:
     - base_python
@@ -44,6 +52,10 @@
     name: "{{ python27_rhel }}"
     state: present
     update_cache: yes
+  register: python27_install
+  until: python27_install is success
+  retries: 3
+  delay: 2
   tags:
     - base_python
 
@@ -51,6 +63,10 @@
   yum:
     name: "{{ python_collection }}"
     state: present
+  register: base_python_install
+  until: base_python_install is success
+  retries: 3
+  delay: 2
   when: collections_enabled
   tags:
     - base_python
