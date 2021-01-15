@@ -10,10 +10,11 @@
     - pip
 
 - name: 'install ubuntu python packages'
-  become: yes
+  become: true
   apt:
     name: "{{ python_apts }}"
     state: present
+    update_cache: true
   register: python_apt_install
   until: python_apt_install is success
   retries: 3

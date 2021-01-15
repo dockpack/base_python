@@ -9,14 +9,14 @@
     - skip_ansible_lint
 
 - name: 'install python_rpms from epel repositories'
-  become: yes
+  become: true
   when:
     - not collections_enabled
     - ansible_distribution_major_version|int == 7
   yum:
     name: "{{ python_epel }}"
     state: present
-    update_cache: yes
+    update_cache: true
   register: python_install
   until: python_install is success
   retries: 3
@@ -38,20 +38,22 @@
     - base_python
 
 - name: 'enable rhel software collections'
+  # yamllint disable rule:line-length
   command: "yum-config-manager --enable rhel-server-rhscl-{{ ansible_distribution_major_version }}-rpms"
   when: collections_enabled|bool and  ansible_distribution == 'Red Hat Enterprise Linux'
+  # yamllint enable rule:line-length
   tags:
     - base_python
 
 - name: 'install python27_rpms from rhel software collections'
-  become: yes
+  become: true
   when:
     - collections_enabled|bool
     - ansible_distribution_major_version|int == 6
   yum:
     name: "{{ python27_rhel }}"
     state: present
-    update_cache: yes
+    update_cache: true
   register: python27_install
   until: python27_install is success
   retries: 3
