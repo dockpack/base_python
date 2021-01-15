@@ -27,7 +27,7 @@
     - pip
 
 - name: install python3 if available
-  become: yes
+  become: true
   apt:
     name: "{{ base_python_package }}"
     state: present
@@ -41,7 +41,7 @@
 
 - name: ensure apt cache is updated
   apt:
-    update_cache: yes
+    update_cache: true
   register: apt_cache_update
   until: apt_cache_update is success
   retries: 3
@@ -50,10 +50,11 @@
     - notest
 
 - name: install required packages
-  become: yes
+  become: true
   apt:
     name: "{{ python_apts }}"
     state: present
+    update_cache: true
   register: python_apt_install
   until: python_apt_install is success
   retries: 3
