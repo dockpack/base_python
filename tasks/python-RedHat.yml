@@ -1,18 +1,14 @@
 ---
 
-- name: 'update setuptools'
-  when: base_python_version == 'python2'
-  yum:
-    name: python-setuptools
-    state: latest
-  tags:
-    - skip_ansible_lint
+- name: 'check if epel repository is installed by base_epel'
+  debug:
+    var: epel
 
 - name: 'install python_rpms from epel repositories'
   become: true
   when:
-    - not collections_enabled
-    - ansible_distribution_major_version|int == 7
+    - ansible_distribution_major_version|int <= 7
+    - epel is defined
   yum:
     name: "{{ python_epel }}"
     state: present
@@ -33,14 +29,20 @@
   until: scl_install is success
   retries: 3
   delay: 2
-  when: collections_enabled|bool and ansible_distribution == 'CentOS'
+  when:
+    - collections_enabled|bool
+    - ansible_distribution == 'CentOS'
+    - ansible_distribution_major_version|int <= 7
   tags:
     - base_python
 
 - name: 'enable rhel software collections'
   # yamllint disable rule:line-length
   command: "yum-config-manager --enable rhel-server-rhscl-{{ ansible_distribution_major_version }}-rpms"
-  when: collections_enabled|bool and  ansible_distribution == 'Red Hat Enterprise Linux'
+  when:
+    - collections_enabled|bool
+    - ansible_distribution == 'Red Hat Enterprise Linux'
+    - ansible_distribution_major_version|int <= 7
   # yamllint enable rule:line-length
   tags:
     - base_python
@@ -69,7 +71,9 @@
   until: base_python_install is success
   retries: 3
   delay: 2
-  when: collections_enabled
+  when:
+    - collections_enabled
+    - ansible_distribution_major_version|int == 7
   tags:
     - base_python
 
@@ -81,4 +85,18 @@
 - name: 'which pip'
   when: collections_enabled
   set_fact:
+    python_infix: python3.8
     pip_executable: "/opt/rh/{{ python_collection }}/root/usr/bin/pip3"
+    my_path: "/opt/rh/{{ python_collection }}/root"
+
+- name: 'update pip3'
+  when: collections_enabled|bool
+  command: "{{ my_path }}/usr/bin/python3 -m pip install -U pip"
+  changed_when: false  # for molecule
+
+- name: 'pip3 install cryptography'
+  when: collections_enabled|bool
+  command: "{{ my_path }}/usr/local/bin/pip3 install cryptography"
+  args:
+    # yamllint disable-line rule:line-length
+    creates: "{{ my_path }}/usr/local/lib64/{{ python_infix }}/site-packages/cryptography"
