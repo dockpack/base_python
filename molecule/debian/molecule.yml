@@ -1,7 +1,8 @@
 ---
 dependency:
   name: galaxy
-  requirements_file: requirements.yml
+  options:
+    role-file: requirements.yml
 driver:
   name: docker
 lint: |
@@ -9,8 +10,8 @@ lint: |
   yamllint .
   ansible-lint
 platforms:
-  - name: rh-python-centos7
-    image: centos:7
+  - name: base-python-debian
+    image: debian
     privileged: true
 provisioner:
   name: ansible
