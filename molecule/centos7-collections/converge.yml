@@ -1,0 +1,6 @@
+---
+# Standards: 0.2
+- hosts: all
+  roles:
+    - role: base_python
+      collections_enabled: true
