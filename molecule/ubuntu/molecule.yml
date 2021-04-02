@@ -1,0 +1,19 @@
+---
+dependency:
+  name: galaxy
+  options:
+    role-file: requirements.yml
+driver:
+  name: docker
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+platforms:
+  - name: base-python-ubuntu
+    image: ubuntu
+    privileged: true
+provisioner:
+  name: ansible
+verifier:
+  name: ansible
