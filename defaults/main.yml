@@ -20,9 +20,10 @@ python27_rhel:
 
 # These are installed on Centos 7 when collections_enabled: false
 python_epel:
-  - python36-pip
+  - python3-devel
+python_infix: python3.6
 
-python_collection: rh-python36
+python_collection: rh-python38
 
 python_apts:
   - python3-pip

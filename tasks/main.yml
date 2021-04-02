@@ -25,6 +25,11 @@
     - base_python
     - redhat
 
+- name: 'update pip3'
+  when: pip_executable == '/usr/bin/pip3'
+  command: python3 -m pip install -U pip
+  changed_when: false
+
 - name: 'deploy our own pip.conf config file'
   become: true
   template:
@@ -34,3 +39,12 @@
   tags:
     - base_python
     - pip
+
+- name: install cryptography
+  command: python3 -m pip install -U cryptography
+  args:
+    # yamllint disable-line rule:line-length
+    creates: "{{ my_path }}/usr/local/lib64/{{ python_infix }}/site-packages/cryptography"
+  ignore_errors: true  # when redhat scl python is the only one.
+  tags:
+    - notest
