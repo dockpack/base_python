@@ -46,3 +46,5 @@
     # yamllint disable-line rule:line-length
     creates: "{{ my_path }}/usr/local/lib64/{{ python_infix }}/site-packages/cryptography"
   ignore_errors: true  # when redhat scl python is the only one.
+  tags:
+    - notest
