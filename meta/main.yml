@@ -1,5 +1,7 @@
 ---
 galaxy_info:
+  role_name: base_python
+  namespace: dockpack
   author: Bas Meijer
   description: install the best python available
   company: dockpack
