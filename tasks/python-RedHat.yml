@@ -9,6 +9,7 @@
   when:
     - ansible_distribution_major_version|int <= 7
     - epel is defined
+    - not collections_enabled|bool
   yum:
     name: "{{ python_epel }}"
     state: present
