@@ -9,7 +9,7 @@ lint: |
   yamllint .
   ansible-lint
 platforms:
-  - name: rh-python36-centos7
+  - name: rh-python-centos7
     image: centos:7
     privileged: true
 provisioner:
