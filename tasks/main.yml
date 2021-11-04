@@ -1,20 +1,20 @@
 ---
 
-- name: 'load Ubuntu specific actions'
+- name: 'Load Ubuntu specific actions'
   include: python-Ubuntu.yml
   when: ansible_distribution == 'Ubuntu'
   tags:
     - base_python
     - ubuntu
 
-- name: 'load Debian specific actions'
+- name: 'Load Debian specific actions'
   include: python-Debian.yml
   when: ansible_distribution == 'Debian'
   tags:
     - base_python
     - debian
 
-- name: 'which pip'
+- name: 'Which pip'
   set_fact:
     pip_executable: "/usr/bin/pip{{ base_python_version }}"
 
@@ -25,13 +25,14 @@
     - base_python
     - redhat
 
-- name: 'update pip3'
+- name: 'Update pip3'
   when: pip_executable == '/usr/bin/pip3'
   command: python3 -m pip install -U pip
   changed_when: false
 
-- name: 'deploy our own pip.conf config file'
+- name: 'Deploy our own pip.conf config file'
   become: true
+  become_user: root
   template:
     src: pip.conf.j2
     dest: '/etc/pip.conf'
@@ -40,7 +41,7 @@
     - base_python
     - pip
 
-- name: install cryptography
+- name: Install cryptography
   command: python3 -m pip install -U cryptography
   args:
     # yamllint disable-line rule:line-length
@@ -48,3 +49,4 @@
   ignore_errors: true  # when redhat scl python is the only one.
   tags:
     - notest
+...

@@ -1,11 +1,12 @@
 ---
 
-- name: 'check if epel repository is installed by base_epel'
+- name: 'Check if epel repository is installed by base_epel'
   debug:
     var: epel
 
-- name: 'install python_rpms from epel repositories'
+- name: 'Install python_rpms from epel repositories'
   become: true
+  become_user: root
   when:
     - ansible_distribution_major_version|int <= 7
     - epel is defined
@@ -22,7 +23,7 @@
     - base_python
     - pip
 
-- name: 'install centos software collections'
+- name: 'Install centos software collections'
   package:
     name: centos-release-scl-rh
     state: present
@@ -37,7 +38,7 @@
   tags:
     - base_python
 
-- name: 'enable rhel software collections'
+- name: 'Enable rhel software collections'
   # yamllint disable rule:line-length
   command: "yum-config-manager --enable rhel-server-rhscl-{{ ansible_distribution_major_version }}-rpms"
   when:
@@ -48,8 +49,9 @@
   tags:
     - base_python
 
-- name: 'install python27_rpms from rhel software collections'
+- name: 'Install python27_rpms from rhel software collections'
   become: true
+  become_user: root
   when:
     - collections_enabled|bool
     - ansible_distribution_major_version|int == 6
@@ -64,7 +66,7 @@
   tags:
     - base_python
 
-- name: 'yum install python from software collections'
+- name: 'Yum install python from software collections'
   yum:
     name: "{{ python_collection }}"
     state: present
@@ -78,26 +80,27 @@
   tags:
     - base_python
 
-- name: 'unlink python3 from software collection'
+- name: 'Unlink python3 from software collection'
   file:
     path: "/etc/profile.d/{{ python_collection }}.sh"
     state: absent
 
-- name: 'which pip'
+- name: 'Which pip'
   when: collections_enabled
   set_fact:
     python_infix: python3.8
     pip_executable: "/opt/rh/{{ python_collection }}/root/usr/bin/pip3"
     my_path: "/opt/rh/{{ python_collection }}/root"
 
-- name: 'update pip3'
+- name: 'Update pip3'
   when: collections_enabled|bool
   command: "{{ my_path }}/usr/bin/python3 -m pip install -U pip"
   changed_when: false  # for molecule
 
-- name: 'pip3 install cryptography'
+- name: 'Pip3 install cryptography'
   when: collections_enabled|bool
   command: "{{ my_path }}/usr/local/bin/pip3 install cryptography"
   args:
     # yamllint disable-line rule:line-length
     creates: "{{ my_path }}/usr/local/lib64/{{ python_infix }}/site-packages/cryptography"
+...
