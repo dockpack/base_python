@@ -1,6 +1,6 @@
 ---
 
-- name: 'set base_python_version: python3'
+- name: 'Set  Ubuntu python_version: python3'
   when: ansible_distribution_release in [ 'wheezy', 'xenial', 'jessie', 'sid']
   set_fact:
     base_python_version: '3'
@@ -9,8 +9,9 @@
     - python
     - pip
 
-- name: 'install ubuntu python packages'
+- name: 'Install ubuntu python packages'
   become: true
+  become_user: root
   apt:
     name: "{{ python_apts }}"
     state: present
@@ -22,3 +23,4 @@
   tags:
     - python
     - pip
+...

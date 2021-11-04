@@ -9,6 +9,7 @@ lint: |
   set -e
   yamllint .
   ansible-lint
+  ansible-later
 platforms:
   - name: base-python-centos7
     image: centos:7
