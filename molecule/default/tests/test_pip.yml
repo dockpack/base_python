@@ -1,6 +1,5 @@
-# Molecule managed
-
 ---
+# Molecule managed
 file:
   /etc/pip.conf:
     exists: true
