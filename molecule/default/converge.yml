@@ -4,3 +4,4 @@
   roles:
     - role: dockpack.base_epel
     - role: base_python
+      collections_enabled: true

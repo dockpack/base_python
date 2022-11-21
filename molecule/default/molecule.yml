@@ -11,7 +11,7 @@ lint: |
   ansible-lint
 platforms:
   - name: base-python-centos7
-    image: centos:7
+    image: centos:7.9.2009
     privileged: true
   - name: base-python-ubuntu
     image: ubuntu
