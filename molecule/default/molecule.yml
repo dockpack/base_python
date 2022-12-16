@@ -10,6 +10,9 @@ lint: |
   yamllint .
   ansible-lint
 platforms:
+  - name: base-python-centos8
+    image: quay.io/centos/centos:stream8
+    privileged: true
   - name: base-python-centos7
     image: centos:7.9.2009
     privileged: true

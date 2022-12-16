@@ -42,11 +42,12 @@
     - pip
 
 - name: Install cryptography
-  command: python3 -m pip install -U cryptography
-  args:
-    # yamllint disable-line rule:line-length
-    creates: "{{ my_path }}/usr/local/lib64/{{ python_infix }}/site-packages/cryptography"
-  ignore_errors: true  # when redhat scl python is the only one.
-  tags:
-    - notest
+  command: "{{ my_path }}/usr/bin/python3 --version"
+  changed_when: false
+  register: python_version
+
+- name: Display version
+  debug:
+    msg: "{{ python_version.stdout_lines }}"
+
 ...
