@@ -86,7 +86,9 @@
     state: absent
 
 - name: 'Which pip'
-  when: collections_enabled
+  when:
+    - collections_enabled
+    - ansible_distribution_major_version|int == 7
   set_fact:
     python_infix: python3.8
     pip_executable: "/opt/rh/{{ python_collection }}/root/usr/bin/pip3"
@@ -98,9 +100,24 @@
   changed_when: false  # for molecule
 
 - name: 'Pip3 install cryptography'
-  when: collections_enabled|bool
+  when:
+    - collections_enabled|bool
+    - ansible_distribution_major_version|int == 7
   command: "{{ my_path }}/usr/local/bin/pip3 install cryptography"
   args:
     # yamllint disable-line rule:line-length
     creates: "{{ my_path }}/usr/local/lib64/{{ python_infix }}/site-packages/cryptography"
+
+- name: 'Install python from AppStream'
+  yum:
+    name: "{{ python_appstream }}"
+    state: present
+  register: base_python_install
+  until: base_python_install is success
+  retries: 3
+  delay: 2
+  when:
+    - ansible_distribution_major_version|int >= 8
+  tags:
+    - base_python
 ...

@@ -1,4 +1,25 @@
 ---
+python_appstream:
+  - python39
+  - python39-cffi
+  - python39-chardet
+  - python39-click
+  - python39-cryptography
+  - python39-devel
+  - python39-dns
+  - python39-idle
+  - python39-idna
+  - python39-jmespath
+  - python39-netaddr
+  - python39-psutil
+  - python39-pyyaml
+  - python39-requests
+  - python39-six
+  - python39-test
+  - python39-toml
+  - python39-urllib3
+  - python39-wheel
+  - python39-xmltodict
 
 # Software collections offer latest versions of programming languages
 collections_enabled: true
@@ -21,7 +42,7 @@ python27_rhel:
 # These are installed on Centos 7 when collections_enabled: false
 python_epel:
   - python3-devel
-python_infix: python3.6
+  - python3-cryptography
 
 python_collection: rh-python38
 
